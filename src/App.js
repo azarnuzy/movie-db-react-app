@@ -1,5 +1,11 @@
+import Navbar from './components/Navbar';
+
 function App() {
-  return <div className="App text-center font-bold">Home</div>;
+  return (
+    <div className="mx-3">
+      <Navbar />
+    </div>
+  );
 }
 
 export default App;
