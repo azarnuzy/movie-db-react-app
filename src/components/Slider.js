@@ -9,6 +9,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 // import required modules
 import { Autoplay, Pagination } from 'swiper';
+import Button, { TrailerButton } from './Button';
 
 export default function Slider() {
   const [movieItems, setMovieItems] = useState([]);
@@ -35,7 +36,7 @@ export default function Slider() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 w-full ">
+    <div className="absolute top-0 left-0 w-full -z-[100]">
       <Swiper
         pagination={pagination}
         autoplay={{
@@ -52,12 +53,21 @@ export default function Slider() {
           return (
             <SwiperSlide key={i}>
               <div className="w-full h-[100vh] relative">
-                <div className="bg-[#0006] absolute w-full h-[100vh] z-10"></div>
+                <div className="bg-[#0006] absolute w-full h-[100vh]"></div>
                 <img
-                  className="absolute w-full h-[100vh] object-cover"
+                  className="absolute w-full h-[100vh] object-cover -z-[10]"
                   src={background}
                   alt=""
                 />
+                <div className="h-[100vh] transform translate-y-[40%] text-white mx-4">
+                  <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
+                  <p className=" text-md mb-3">
+                    {item.overview.length > 200
+                      ? `${item.overview.substring(0, 200)}...`
+                      : item.overview}
+                  </p>
+                  <TrailerButton />
+                </div>
               </div>
             </SwiperSlide>
           );

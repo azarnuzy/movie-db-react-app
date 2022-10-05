@@ -48,7 +48,7 @@ export default function ModalElement() {
         contentLabel="Example Modal"
       >
         <div className="flex justify-end text-2xl mt-3 mr-4 text-white">
-          <button onClick={closeModal}>
+          <button onClick={closeModal} className="absolute top-[15px]">
             <AiOutlineClose />
           </button>
         </div>

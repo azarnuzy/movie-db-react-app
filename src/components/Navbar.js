@@ -9,7 +9,7 @@ export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
   const isPhone = useMediaQuery({ query: '(max-width: 640px)' });
   return (
-    <div className="flex justify-between mt-3 relative z-[100]">
+    <div className="flex justify-between mt-3 relative">
       <img src={logo} alt="" className="transform scale-90" />
       {isPhone && (
         <div className="flex gap-3 text-[30px]  text-white items-center ">

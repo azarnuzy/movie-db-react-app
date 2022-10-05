@@ -14,7 +14,7 @@ body {
 .swiper-pagination-bullet {
   color: #fff;
   height: 3px !important;
-  border-radius: 5px !important;
+  border-radius: 3px !important;
   width: 16px !important;
   background: #fff !important;
   opacity: 1;
