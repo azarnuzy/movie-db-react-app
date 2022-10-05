@@ -10,10 +10,10 @@ export default function Navbar() {
   const isPhone = useMediaQuery({ query: '(max-width: 640px)' });
   return (
     <div className="flex justify-between mt-3">
-      <img src={logo} alt="" />
+      <img src={logo} alt="" className="transform scale-90" />
       {isPhone && (
         <div className="flex gap-3 text-[30px]  text-white items-center bg-slate-300">
-          <AiOutlineSearch />
+          <ModalElement />
           <AiOutlineUser />
         </div>
       )}
@@ -36,9 +36,6 @@ export default function Navbar() {
           <Button type={'primary'}>Register</Button>
         </div>
       )}
-      <div id="modal">
-        <ModalElement />
-      </div>
     </div>
   );
 }
