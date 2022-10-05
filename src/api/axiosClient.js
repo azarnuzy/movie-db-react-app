@@ -16,7 +16,6 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  // console.log('do something');
   return config;
 });
 

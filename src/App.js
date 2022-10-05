@@ -1,5 +1,6 @@
 import Navbar from './components/Navbar';
 import RoutesComponent from './config/RoutesComponent';
+import 'swiper/css/bundle';
 
 function App() {
   return (

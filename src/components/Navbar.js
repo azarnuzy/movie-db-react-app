@@ -9,24 +9,24 @@ export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
   const isPhone = useMediaQuery({ query: '(max-width: 640px)' });
   return (
-    <div className="flex justify-between mt-3">
+    <div className="flex justify-between mt-3 relative z-[100]">
       <img src={logo} alt="" className="transform scale-90" />
       {isPhone && (
-        <div className="flex gap-3 text-[30px]  text-white items-center bg-slate-300">
+        <div className="flex gap-3 text-[30px]  text-white items-center ">
           <ModalElement />
           <AiOutlineUser />
         </div>
       )}
       {isSmallWidth && (
-        <div className="sm:flex justify-between px-5 py-[6.5px] rounded-full group focus-within:border-lightRed border-slate-300 border-solid border items-center hidden">
+        <div className="sm:flex w-full mx-5 lg:mx-20 justify-between px-4 py-[6.5px] rounded-full group focus-within:border-lightRed border-slate-300 border-solid border items-center hidden">
           <input
             type="text"
-            className="outline-none"
+            className="outline-none bg-transparent text-white"
             id="search-movie"
             placeholder="what do you want to watch?"
           />
           <label htmlFor="search-movie">
-            <AiOutlineSearch />
+            <AiOutlineSearch className="text-white" />
           </label>
         </div>
       )}
