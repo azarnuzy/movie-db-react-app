@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 // import required modules
 import { Autoplay, Pagination } from 'swiper';
-import Button, { TrailerButton } from './Button';
+import { TrailerButton } from './Button';
 
 export default function Slider() {
   const [movieItems, setMovieItems] = useState([]);
@@ -59,7 +59,7 @@ export default function Slider() {
                   src={background}
                   alt=""
                 />
-                <div className="h-[100vh] transform translate-y-[40%] text-white mx-4">
+                <div className="h-[100vh] transform translate-y-[40%] text-white mx-4 lg:max-w-5xl lg:mx-auto">
                   <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
                   <p className=" text-md mb-3">
                     {item.overview.length > 200

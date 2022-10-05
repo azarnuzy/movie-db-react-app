@@ -4,7 +4,7 @@ import 'swiper/css/bundle';
 
 function App() {
   return (
-    <div className="mx-3 " id="app">
+    <div className="mx-3 lg:max-w-5xl lg:mx-auto" id="app">
       <Navbar />
       <RoutesComponent />
     </div>
