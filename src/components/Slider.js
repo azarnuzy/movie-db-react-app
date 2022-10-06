@@ -60,7 +60,7 @@ export default function Slider() {
                   alt=""
                 />
                 <div className="h-[100vh] transform translate-y-[40%] text-white mx-4 lg:max-w-5xl lg:mx-auto">
-                  <h2 className="text-2xl font-bold mb-4">{item.title}</h2>
+                  <h2 className="text-3xl font-bold mb-4">{item.title}</h2>
                   <p className=" text-md mb-3">
                     {item.overview.length > 200
                       ? `${item.overview.substring(0, 200)}...`
