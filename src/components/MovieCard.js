@@ -16,8 +16,10 @@ export default function MovieCard({ item, category }) {
           alt=""
           className="rounded-lg brightness-50 group-hover:brightness-[0.25] transition ease-out delay-75 duration-300"
         />
-        <div className=" absolute bottom-5 left-5 z-10 group-hover:transform group-hover:-translate-y-2 transition ease-out delay-75 duration-300">
-          <h3 className="text-white font-semibold text-lg">{item.name}</h3>
+        <div className=" absolute bottom-5 translate-y-20 sm:translate-y-0 left-5 z-10 group-hover:transform group-hover:-translate-y-2 transition ease-out delay-75 duration-300">
+          <h3 className="text-white font-semibold text-lg w-full">
+            {item.name}
+          </h3>
           <span className="flex gap-3 items-center text-yellow-400 mt-1 ">
             <AiFillStar /> <p>{item.vote_average} / 10</p>
           </span>

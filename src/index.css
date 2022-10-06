@@ -25,3 +25,7 @@ body {
   color: rgb(241, 245, 249);
   width: 24px !important;
 }
+
+.ReactModal__Overlay {
+  z-index: 100;
+}

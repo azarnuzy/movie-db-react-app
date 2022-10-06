@@ -36,7 +36,7 @@ export default function Slider() {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 w-full -z-[100]">
+    <div className="absolute top-0 left-0 w-full">
       <Swiper
         pagination={pagination}
         autoplay={{

@@ -35,7 +35,6 @@ export default function MovieLists({ category, type, id }) {
     getList();
   }, [category, id, type]);
 
-  console.log(items);
   return (
     <div className="w-full ">
       <Swiper

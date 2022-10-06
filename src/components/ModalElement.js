@@ -55,7 +55,7 @@ export default function ModalElement() {
         {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
         {/* <button onClick={closeModal}>close</button> */}
         {/* <div>I am a modal</div> */}
-        <form className="-mt-4 w-[95vw] h-[95vh] bg-transparent flex justify-center items-center">
+        <form className="-mt-4 w-[95vw] h-[95vh] bg-transparent flex justify-center items-center z-[100]">
           <input
             className="w-[90%] rounded-md bg-transparent border-solid border-white border py-2 px-5 text-white"
             placeholder="what do you want to watch?"

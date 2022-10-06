@@ -8,7 +8,9 @@ export default function Home() {
   return (
     <div>
       <Slider />
-      <TitleSection>Popular Movie</TitleSection>
+      <TitleSection page={'home'} destination={'allMovie'}>
+        Popular Movie
+      </TitleSection>
       <MovieLists category={category.movie} type={movieType.popular} />
     </div>
   );

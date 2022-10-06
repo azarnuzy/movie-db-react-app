@@ -4,15 +4,18 @@ import Button from './Button';
 import logo from '../images/Logo.svg';
 import { useMediaQuery } from 'react-responsive';
 import ModalElement from './ModalElement';
+import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
   const isPhone = useMediaQuery({ query: '(max-width: 640px)' });
   return (
-    <div className="flex justify-between mt-3 relative">
-      <img src={logo} alt="" className="transform scale-90" />
+    <div className="flex justify-between mt-3 relative z-10">
+      <Link to="/">
+        <img src={logo} alt="" className="transform scale-90" />
+      </Link>
       {isPhone && (
-        <div className="flex gap-3 text-[30px]  text-white items-center ">
+        <div className="flex gap-3 text-[30px]  text-slate-200 items-center ">
           <ModalElement />
           <AiOutlineUser />
         </div>
