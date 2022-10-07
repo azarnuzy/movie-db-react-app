@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AiOutlineClose, AiOutlineSearch } from 'react-icons/ai';
 import Modal from 'react-modal';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const customStyles = {
   content: {
@@ -20,7 +21,15 @@ Modal.setAppElement('#root');
 
 export default function ModalElement() {
   const [modalIsOpen, setIsOpen] = useState(false);
-
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState();
+  const page = useLocation();
+  const category =
+    page.pathname.indexOf('/tv') >= 0
+      ? 'tv'
+      : page.pathname.indexOf('/movie') >= 0
+      ? 'movie'
+      : 'multi';
   function openModal() {
     setIsOpen(true);
   }
@@ -33,6 +42,16 @@ export default function ModalElement() {
   function closeModal() {
     setIsOpen(false);
   }
+
+  const handleKeyPressed = (e) => {
+    if (e.key === 'Enter') {
+      closeModal();
+      navigate(`/${category}/search/${keyword}`, {
+        state: { search: keyword },
+      });
+      setKeyword('');
+    }
+  };
 
   return (
     <div className="flex items-center">
@@ -55,6 +74,9 @@ export default function ModalElement() {
           <input
             className="w-[90%] rounded-md bg-transparent border-solid border-white border py-2 px-5 text-white"
             placeholder="what do you want to watch?"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={(e) => handleKeyPressed(e)}
           />
         </form>
       </Modal>
