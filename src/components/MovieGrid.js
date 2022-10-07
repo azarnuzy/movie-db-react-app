@@ -30,6 +30,7 @@ export default function MovieGrid({ category }) {
             response = await tmdbApi.getMoviesList(movieType.popular, {
               params,
             });
+
             break;
           default:
             response = await tmdbApi.getTvList(tvType.popular, { params });
@@ -39,6 +40,7 @@ export default function MovieGrid({ category }) {
 
         response = await tmdbApi.search(category, { params });
       }
+
       setItems(response.results);
       setTotalPage(response.total_pages);
     };

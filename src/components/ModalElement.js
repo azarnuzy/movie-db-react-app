@@ -19,7 +19,6 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default function ModalElement() {
-  let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -52,18 +51,11 @@ export default function ModalElement() {
             <AiOutlineClose />
           </button>
         </div>
-        {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-        {/* <button onClick={closeModal}>close</button> */}
-        {/* <div>I am a modal</div> */}
         <form className="-mt-4 w-[95vw] h-[95vh] bg-transparent flex justify-center items-center z-[100]">
           <input
             className="w-[90%] rounded-md bg-transparent border-solid border-white border py-2 px-5 text-white"
             placeholder="what do you want to watch?"
           />
-          {/* <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button> */}
         </form>
       </Modal>
     </div>

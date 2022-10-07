@@ -5,7 +5,6 @@ import logo from '../images/Logo.svg';
 import { useMediaQuery } from 'react-responsive';
 import ModalElement from './ModalElement';
 import { Link, useNavigate } from 'react-router-dom';
-import { category as cate } from '../api/tmdbApi';
 import { useLocation } from 'react-router-dom';
 
 export default function Navbar() {

@@ -12,6 +12,10 @@ export default function Catalog() {
   if (category === 'tv') {
     title = 'Popular TV Shows';
   }
+
+  if (category === 'top_rated') {
+    title = 'Top Rated Movies';
+  }
   return (
     <div>
       <PageHeader>{title}</PageHeader>

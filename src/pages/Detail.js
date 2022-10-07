@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 import apiConfig from '../api/apiConfig';
 import tmdbApi from '../api/tmdbApi';
 import { TrailerButton } from '../components/Button';
-import noImage from '../images/noImage.png';
 
 export default function Detail() {
   let { category, id } = useParams();
@@ -54,7 +53,7 @@ export default function Detail() {
               <span className="flex gap-3 items-center text-yellow-400 mt-1 mb-3 ">
                 <AiFillStar /> <p>{item.vote_average} / 10</p>
               </span>
-              <TrailerButton />
+              <TrailerButton item={item} />
             </div>
           </div>
         )}

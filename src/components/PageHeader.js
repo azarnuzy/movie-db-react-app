@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import pageHeader from '../images/pageHeader.png';
 export default function PageHeader({ children }) {
   return (

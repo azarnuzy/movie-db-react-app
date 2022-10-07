@@ -8,6 +8,9 @@ export default function MovieCard({ item, category, mediaType }) {
   let pathCategory = mediaType;
   if (mediaType === undefined || mediaType === null) {
     pathCategory = category;
+    if (category === 'top_rated') {
+      pathCategory = 'movie';
+    }
   }
   const link = '/' + cate[pathCategory] + '/' + item.id;
 

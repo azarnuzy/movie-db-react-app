@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function TitleSection({ children, section, destination }) {
   let mt, link;
+
   if (section === 'homePopularMovie') {
     mt = 'mt-[97vh]';
   }
@@ -18,9 +19,10 @@ export default function TitleSection({ children, section, destination }) {
   if (destination === 'allTv') {
     link = '/tv';
   }
+
   return (
     <div
-      className={`flex text-lg  mb-4 justify-between mx-2 ${mt} font-semibold`}
+      className={`flex text-lg  mb-4 justify-between mx-2 ${mt} font-semibold mt-4`}
     >
       <h2>{children}</h2>
       <Link to={link} className="">

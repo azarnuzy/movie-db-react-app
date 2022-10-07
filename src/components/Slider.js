@@ -68,7 +68,7 @@ export default function Slider() {
                       ? `${item.overview.substring(0, 200)}...`
                       : item.overview}
                   </p>
-                  <TrailerButton />
+                  <TrailerButton item={item} />
                 </div>
               </div>
             </SwiperSlide>

@@ -16,13 +16,18 @@ export default function Button({ children, type }) {
   );
 }
 
-export function TrailerButton() {
+export function TrailerButton({ item }) {
   return (
-    <button
+    <a
+      href={`https://youtube.com/results?search_query=${
+        item.name || item.title
+      }`}
+      target="_blank"
       className={`px-4 py-2 rounded-full border-solid border-lightRed bg-lightRed font-medium text-white hover:opacity-80 flex items-center gap-2 max-w-fit`}
+      rel="noreferrer"
     >
       <AiOutlinePlayCircle className="text-xl" /> Watch Trailer
-    </button>
+    </a>
   );
 }
 
