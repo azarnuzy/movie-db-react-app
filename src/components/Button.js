@@ -18,7 +18,7 @@ export default function Button({ children, type }) {
 export function TrailerButton() {
   return (
     <button
-      className={`px-3 py-2 rounded-full border-solid border-lightRed bg-lightRed font-medium text-white hover:opacity-80 flex items-center gap-2`}
+      className={`px-4 py-2 rounded-full border-solid border-lightRed bg-lightRed font-medium text-white hover:opacity-80 flex items-center gap-2 max-w-fit`}
     >
       <AiOutlinePlayCircle className="text-xl" /> Watch Trailer
     </button>

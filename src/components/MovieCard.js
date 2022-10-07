@@ -29,7 +29,7 @@ export default function MovieCard({ item, category, page }) {
         <div className=" absolute bottom-5 translate-y-0  left-5 z-10 group-hover:transform group-hover:-translate-y-2 transition ease-out delay-75 duration-300">
           <h3 className="text-white font-semibold text-lg w-full">{title}</h3>
           <span className="flex gap-3 items-center text-yellow-400 mt-1 ">
-            <AiFillStar /> <p>{item.vote_average} / 10</p>
+            <AiFillStar /> <p>{item.vote_average.toFixed(1)} / 10</p>
           </span>
         </div>
       </div>
