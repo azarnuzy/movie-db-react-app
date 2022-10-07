@@ -1,5 +1,6 @@
 import React from 'react';
 import { AiOutlinePlayCircle } from 'react-icons/ai';
+import PropTypes from 'prop-types';
 
 export default function Button({ children, type }) {
   return (
@@ -24,3 +25,18 @@ export function TrailerButton() {
     </button>
   );
 }
+
+export const OutlineButton = (props) => {
+  return (
+    <button
+      className={`btn-outline ${props.className}`}
+      onClick={props.onClick ? () => props.onClick() : null}
+    >
+      {props.children}
+    </button>
+  );
+};
+
+Button.propTypes = {
+  onClick: PropTypes.func,
+};
