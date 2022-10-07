@@ -10,6 +10,7 @@ export default function RoutesComponent() {
       <Route path="/" element={<Home />} />
       <Route path="/:category" element={<Catalog />} />
       <Route path="/:category/:id" element={<Detail />} />
+      <Route path="/:category/search/:keyword" element={<Catalog />} />
     </Routes>
   );
 }

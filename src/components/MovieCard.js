@@ -2,22 +2,21 @@ import React from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import apiConfig from '../api/apiConfig';
-import { category as tempCategory } from '../api/tmdbApi';
-export default function MovieCard({ item, category, page }) {
-  const link = '/' + tempCategory[category] + '/' + item.id;
+import { category as cate } from '../api/tmdbApi';
+import noImage from '../images/noImage.png';
+export default function MovieCard({ item, category, mediaType }) {
+  let pathCategory = mediaType;
+  if (mediaType === undefined || mediaType === null) {
+    pathCategory = category;
+  }
+  const link = '/' + cate[pathCategory] + '/' + item.id;
 
-  const bg = apiConfig.w500Image(item.poster_path || item.backdrop_path);
-  let title = '';
+  let bg = apiConfig.w500Image(item.poster_path || item.backdrop_path);
 
-  if (page === 'homePage') {
-    title = item.title;
-  } else if (page === 'popularPage') {
-    title = item.title;
+  if (bg.indexOf('undefined') >= 0 || bg.indexOf('null') >= 0) {
+    bg = noImage;
   }
 
-  if (category === 'tv') {
-    title = item.name;
-  }
   return (
     <Link to={link}>
       <div className="relative group">
@@ -27,9 +26,11 @@ export default function MovieCard({ item, category, page }) {
           className="rounded-lg brightness-50 group-hover:brightness-[0.25] transition ease-out delay-75 duration-300"
         />
         <div className=" absolute bottom-5 translate-y-0  left-5 z-10 group-hover:transform group-hover:-translate-y-2 transition ease-out delay-75 duration-300">
-          <h3 className="text-white font-semibold text-lg w-full">{title}</h3>
+          <h3 className="text-white font-semibold text-lg w-full">
+            {item.name || item.title}
+          </h3>
           <span className="flex gap-3 items-center text-yellow-400 mt-1 ">
-            <AiFillStar /> <p>{item.vote_average.toFixed(1)} / 10</p>
+            <AiFillStar /> <p>{item.vote_average} / 10</p>
           </span>
         </div>
       </div>

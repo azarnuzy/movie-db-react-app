@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import apiConfig from '../api/apiConfig';
 
@@ -12,6 +13,12 @@ export default function MovieGrid({ category }) {
   const [totalPage, setTotalPage] = useState(0);
 
   const { keyword } = useParams();
+
+  const location = useLocation();
+  let search = '';
+  if (location.state !== null) {
+    search = location.state.search;
+  }
 
   useEffect(() => {
     const getList = async () => {
@@ -29,6 +36,7 @@ export default function MovieGrid({ category }) {
         }
       } else {
         const params = { api_key: apiConfig.apiKey, query: keyword };
+
         response = await tmdbApi.search(category, { params });
       }
       setItems(response.results);
@@ -63,11 +71,18 @@ export default function MovieGrid({ category }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-10">
+      {search !== null && search.length > 0 && (
+        <h3 className="text-center font-bold text-lg -mt-2 -mb-4">
+          Search Result "{search}"
+        </h3>
+      )}
+
+      <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-10">
         {items.map((item, i) => (
           <MovieCard
             category={category}
             item={item}
+            mediaType={item.media_type}
             key={i}
             page="popularPage"
           />

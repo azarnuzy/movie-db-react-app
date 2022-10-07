@@ -4,25 +4,28 @@ import { useParams } from 'react-router-dom';
 import apiConfig from '../api/apiConfig';
 import tmdbApi from '../api/tmdbApi';
 import { TrailerButton } from '../components/Button';
+import noImage from '../images/noImage.png';
 
 export default function Detail() {
-  const { category, id } = useParams();
+  let { category, id } = useParams();
   const [item, setItem] = useState(null);
 
   useEffect(() => {
-    const getDetail = async () => {
-      const params = { api_key: apiConfig.apiKey };
-      const response = await tmdbApi.detail(category, id, { params: params });
-      setItem(response);
-      window.scrollTo(0, 0);
-    };
+    try {
+      const getDetail = async () => {
+        const params = { api_key: apiConfig.apiKey };
+        const response = await tmdbApi.detail(category, id, { params: params });
+        setItem(response);
+        window.scrollTo(0, 0);
+      };
 
-    getDetail();
+      getDetail();
+    } catch (error) {}
   }, [category, id]);
 
   return (
     <div>
-      <div className="h-[86vh]"></div>
+      <div className="h-[84vh]"></div>
       <div className="absolute top-0 left-0 w-full">
         {item && (
           <div className="w-full h-[100vh] relative">
@@ -49,7 +52,7 @@ export default function Detail() {
               </div>
               <p className=" text-md mb-3">{item.overview}</p>
               <span className="flex gap-3 items-center text-yellow-400 mt-1 mb-3 ">
-                <AiFillStar /> <p>{item.vote_average.toFixed(1)} / 10</p>
+                <AiFillStar /> <p>{item.vote_average} / 10</p>
               </span>
               <TrailerButton />
             </div>

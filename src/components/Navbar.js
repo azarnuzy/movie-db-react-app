@@ -1,14 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import Button from './Button';
 import logo from '../images/Logo.svg';
 import { useMediaQuery } from 'react-responsive';
 import ModalElement from './ModalElement';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { category as cate } from '../api/tmdbApi';
+import { useLocation } from 'react-router-dom';
 
 export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
   const isPhone = useMediaQuery({ query: '(max-width: 640px)' });
+  const navigate = useNavigate();
+  const [keyword, setKeyword] = useState();
+  const page = useLocation();
+
+  const category =
+    page.pathname.indexOf('/tv') >= 0
+      ? 'tv'
+      : page.pathname.indexOf('/movie') >= 0
+      ? 'movie'
+      : 'multi';
+
+  const handleKeyPressed = (e) => {
+    if (e.key === 'Enter') {
+      navigate(`/${category}/search/${keyword}`, {
+        state: { search: keyword },
+      });
+      setKeyword('');
+    }
+  };
+
   return (
     <div className="flex justify-between mt-3 relative z-10">
       <Link to="/" className="flex items-center">
@@ -27,6 +49,9 @@ export default function Navbar() {
             className="outline-none bg-transparent text-white"
             id="search-movie"
             placeholder="what do you want to watch?"
+            value={keyword}
+            onChange={(e) => setKeyword(e.target.value)}
+            onKeyDown={(e) => handleKeyPressed(e)}
           />
           <label htmlFor="search-movie">
             <AiOutlineSearch className="text-white" />
