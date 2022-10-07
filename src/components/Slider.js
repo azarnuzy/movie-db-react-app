@@ -7,8 +7,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
 // import required modules
-import { Autoplay, Pagination } from 'swiper';
+import { EffectFade, Autoplay, Pagination } from 'swiper';
 import { TrailerButton } from './Button';
 
 export default function Slider() {
@@ -39,12 +40,13 @@ export default function Slider() {
     <div className="absolute top-0 left-0 w-full">
       <Swiper
         pagination={pagination}
+        effect={'fade'}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
         className="mySwiper"
-        modules={[Autoplay, Pagination]}
+        modules={[EffectFade, Autoplay, Pagination]}
       >
         {movieItems.map((item, i) => {
           const background = apiConfig.originalImage(

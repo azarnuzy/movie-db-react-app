@@ -2,13 +2,21 @@ import React from 'react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-export default function TitleSection({ children, page, destination }) {
+export default function TitleSection({ children, section, destination }) {
   let mt, link;
-  if (page === 'home') {
+  if (section === 'homePopularMovie') {
     mt = 'mt-[97vh]';
+  }
+
+  if (section === 'homePopularTV') {
+    mt = 'mt-3';
   }
   if (destination === 'allMovie') {
     link = '/movie';
+  }
+
+  if (destination === 'allTv') {
+    link = '/tv';
   }
   return (
     <div
@@ -16,8 +24,8 @@ export default function TitleSection({ children, page, destination }) {
     >
       <h2>{children}</h2>
       <Link to={link} className="">
-        <div className="text-lightRed gap-10 flex items-center">
-          <span className="">See All Movie</span> <AiOutlineArrowRight />
+        <div className="text-lightRed gap-3 flex items-center">
+          <span className="">View More</span> <AiOutlineArrowRight />
         </div>
       </Link>
     </div>

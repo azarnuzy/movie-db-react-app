@@ -11,8 +11,8 @@ export default function Navbar() {
   const isPhone = useMediaQuery({ query: '(max-width: 640px)' });
   return (
     <div className="flex justify-between mt-3 relative z-10">
-      <Link to="/">
-        <img src={logo} alt="" className="transform scale-90" />
+      <Link to="/" className="flex items-center">
+        <img src={logo} alt="" className="transform scale-90 lg:scale-100" />
       </Link>
       {isPhone && (
         <div className="flex gap-3 text-[30px]  text-slate-200 items-center ">

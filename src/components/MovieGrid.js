@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import apiConfig from '../api/apiConfig';
 
 import tmdbApi, { category as cate, movieType, tvType } from '../api/tmdbApi';
+import MovieCard from './MovieCard';
 
 export default function MovieGrid({ category }) {
   const [items, setItems] = useState([]);
@@ -18,7 +19,7 @@ export default function MovieGrid({ category }) {
         const params = { api_key: apiConfig.apiKey };
         switch (category) {
           case cate.movie:
-            response = await tmdbApi.getMoviesList(movieType.upcoming, {
+            response = await tmdbApi.getMoviesList(movieType.popular, {
               params,
             });
             break;
@@ -58,5 +59,12 @@ export default function MovieGrid({ category }) {
     setItems([...items, ...response.results]);
     setPage(page + 1);
   };
-  return <div></div>;
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-10">
+      {items.map((item, i) => (
+        <MovieCard category={category} item={item} key={i} page="popularPage" />
+      ))}
+    </div>
+  );
 }
