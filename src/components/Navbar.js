@@ -6,6 +6,8 @@ import { useMediaQuery } from 'react-responsive';
 import ModalElement from './ModalElement';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import ModalRegister from './ModalRegister';
+import ModalLogin from './ModalLogin';
 
 export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
@@ -59,8 +61,10 @@ export default function Navbar() {
       )}
       {isSmallWidth && (
         <div className="sm:flex justify-between gap-2 hidden">
-          <Button type={'secondary'}>Login</Button>
-          <Button type={'primary'}>Register</Button>
+          {/* <Button type={'secondary'}>Login</Button> */}
+          {/* <Button type={'primary'}>Register</Button> */}
+          <ModalLogin />
+          <ModalRegister />
         </div>
       )}
     </div>
