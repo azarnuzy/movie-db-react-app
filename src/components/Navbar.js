@@ -67,6 +67,12 @@ export default function Navbar() {
           <ModalRegister />
         </div>
       )}
+      {isSmallWidth && (
+        <div className="sm:flex justify-between gap-2 hidden">
+          {/* <Button type={'secondary'}>Login</Button> */}
+          {/* <Button type={'primary'}>Register</Button> */}
+        </div>
+      )}
     </div>
   );
 }

@@ -2,10 +2,10 @@ import React from 'react';
 import { AiOutlinePlayCircle } from 'react-icons/ai';
 import PropTypes from 'prop-types';
 
-export default function Button({ children, type, openModal }) {
+export default function Button({ children, type, openModal, typeButton }) {
   return (
     <button
-      type="button"
+      type={typeButton || 'button'}
       className={`px-3 py-2 rounded-full border-solid border-lightRed  w-[100px] transition duration-300 ${
         type === 'primary'
           ? 'bg-lightRed font-medium text-white  hover:opacity-80 '
