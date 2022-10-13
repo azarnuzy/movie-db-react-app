@@ -4,7 +4,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { AiOutlineEyeInvisible, AiOutlineMail } from 'react-icons/ai';
 import Button from './Button';
 
-export default function ModalLogin() {
+export default function ModalLogin({ handleLogin }) {
   let [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
@@ -32,11 +32,12 @@ export default function ModalLogin() {
         { email: user, password: password }
       );
 
-      localStorage.setItem('data', JSON.stringify(response?.data));
+      localStorage.setItem('user-info', JSON.stringify(response?.data));
 
       console.log(JSON.stringify(response?.data));
       console.log(user);
       console.log(password);
+      handleLogin();
       setUser('');
       setPassword('');
       setSuccess(true);
@@ -74,7 +75,7 @@ export default function ModalLogin() {
           >
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
-          <div className="fixed inset-0 overflow-y-auto">
+          <div className="fixed inset-0 overflow-y-auto z-[100]">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}

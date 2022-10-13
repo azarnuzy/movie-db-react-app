@@ -39,13 +39,13 @@ export default function MovieLists({ category, type, id }) {
 
   const getSlidesPerView = () => {
     if (width >= 1280) {
-      return 4;
+      return 5;
     } else if (width >= 1024) {
-      return 3;
+      return 4;
     } else if (width >= 768) {
-      return 2;
+      return 3;
     } else {
-      return 1;
+      return 2;
     }
   };
 

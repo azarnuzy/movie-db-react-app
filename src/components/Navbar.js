@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
-import Button from './Button';
 import logo from '../images/Logo.svg';
 import { useMediaQuery } from 'react-responsive';
 import ModalElement from './ModalElement';
@@ -8,6 +7,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import ModalRegister from './ModalRegister';
 import ModalLogin from './ModalLogin';
+import MenuProfile from './MenuProfile';
+import { Menu } from '@headlessui/react';
 
 export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
@@ -15,6 +16,9 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [keyword, setKeyword] = useState();
   const page = useLocation();
+  const [isLogin, setIsLogin] = useState(false);
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
 
   const category =
     page.pathname.indexOf('/tv') >= 0
@@ -22,6 +26,20 @@ export default function Navbar() {
       : page.pathname.indexOf('/movie') >= 0
       ? 'movie'
       : 'multi';
+
+  const handleLogin = () => {
+    const data = JSON.parse(localStorage.getItem('user-info')).data;
+    setIsLogin(true);
+    setFirstName(data.first_name);
+    setLastName(data.last_name);
+  };
+
+  const handleLogout = () => {
+    setIsLogin(false);
+    setFirstName('');
+    setLastName('');
+    localStorage.removeItem('user-info');
+  };
 
   const handleKeyPressed = (e) => {
     if (e.key === 'Enter') {
@@ -35,16 +53,26 @@ export default function Navbar() {
   return (
     <div className="flex justify-between mt-3 relative z-10">
       <Link to="/" className="flex items-center">
-        <img src={logo} alt="" className="transform scale-90 lg:scale-100" />
+        <img src={logo} alt="" className="transform scale-90  lg:scale-110" />
       </Link>
-      {isPhone && (
+      {isPhone && !isLogin && (
         <div className="flex gap-3 text-[30px]  text-slate-200 items-center ">
           <ModalElement />
-          <AiOutlineUser />
+          <DropDownMenu handleLogin={handleLogin} />
+        </div>
+      )}
+      {isPhone && isLogin && (
+        <div className="flex gap-3 text-[30px]  text-slate-200 items-center ">
+          <ModalElement />
+          <MenuProfile
+            firstName={firstName}
+            lastName={lastName}
+            handleLogout={handleLogout}
+          />
         </div>
       )}
       {isSmallWidth && (
-        <div className="sm:flex w-full mx-5 lg:mx-20 justify-between px-4 py-[6.5px] rounded-full group focus-within:border-lightRed border-slate-300 border-solid border items-center hidden">
+        <div className="sm:flex w-full sm:w-auto sm:flex-grow mx-5 lg:mx-20 justify-between px-4 py-[6.5px] rounded-full group focus-within:border-lightRed border-slate-300 border-solid border items-center hidden">
           <input
             type="text"
             className="outline-none bg-transparent text-white"
@@ -59,20 +87,56 @@ export default function Navbar() {
           </label>
         </div>
       )}
-      {isSmallWidth && (
+      {isSmallWidth && !isLogin && (
         <div className="sm:flex justify-between gap-2 hidden">
-          {/* <Button type={'secondary'}>Login</Button> */}
-          {/* <Button type={'primary'}>Register</Button> */}
-          <ModalLogin />
-          <ModalRegister />
+          <ModalLogin handleLogin={handleLogin} />
+          <ModalRegister handleLogin={handleLogin} />
         </div>
       )}
-      {isSmallWidth && (
-        <div className="sm:flex justify-between gap-2 hidden">
-          {/* <Button type={'secondary'}>Login</Button> */}
-          {/* <Button type={'primary'}>Register</Button> */}
-        </div>
+      {isSmallWidth && isLogin && (
+        <MenuProfile
+          firstName={firstName}
+          lastName={lastName}
+          handleLogout={handleLogout}
+        />
       )}
+    </div>
+  );
+}
+
+function DropDownMenu({ handleLogin }) {
+  const [customOpen, setCustomOpen] = useState(false);
+  function buttonClicked() {
+    setCustomOpen((prev) => !prev);
+  }
+  return (
+    <div className="flex items-center">
+      <Menu>
+        {({ open }) => (
+          <>
+            <Menu.Button
+              onClick={buttonClicked}
+              className="flex gap-2 items-center"
+            >
+              <AiOutlineUser />
+            </Menu.Button>
+
+            {customOpen && (
+              <Menu.Items
+                static
+                className="fixed top-8 bg-transparent sm:px-5 sm:right-2 right-0 mt-2 w-fit p-2  origin-top-right  rounded-sm md:text-lg  ring-1 ring-black ring-opacity-5 focus:outline-none text-black text-sm flex flex-col gap-3"
+              >
+                <Menu.Item className="text-left">
+                  <ModalLogin handleLogin={handleLogin} />
+                </Menu.Item>
+                <Menu.Item className="text-left">
+                  <ModalRegister handleLogin={handleLogin} />
+                </Menu.Item>
+              </Menu.Items>
+            )}
+          </>
+        )}
+      </Menu>
     </div>
   );
 }

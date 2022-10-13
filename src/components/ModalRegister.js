@@ -8,7 +8,7 @@ import Button from './Button';
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
 const PWD_REGEX = /[a-z]/;
 
-export default function ModalRegister() {
+export default function ModalRegister({ handleLogin }) {
   let [isOpen, setIsOpen] = useState(false);
 
   const errRef = useRef();
@@ -67,8 +67,9 @@ export default function ModalRegister() {
         }
       );
       closeModal();
-      localStorage.setItem('data', JSON.stringify(response?.data));
-      console.log(JSON.stringify(response?.data));
+      localStorage.setItem('user-info', JSON.stringify(response?.data));
+      // console.log(JSON.stringify(response?.data));
+      handleLogin();
       setSuccess(true);
       setFirstName('');
       setLastName('');
