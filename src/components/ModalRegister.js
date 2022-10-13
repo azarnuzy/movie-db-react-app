@@ -6,7 +6,7 @@ import axios from 'axios';
 import Button from './Button';
 
 const EMAIL_REGEX = /^[A-Za-z0-9_!#$%&'*+\\/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/;
-const PWD_REGEX = /[a-z]/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function ModalRegister({ handleLogin }) {
   let [isOpen, setIsOpen] = useState(false);
@@ -30,7 +30,6 @@ export default function ModalRegister({ handleLogin }) {
   const [matchFocus, setMatchFocus] = useState(false);
 
   const [errMsg, setErrMsg] = useState('');
-  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
@@ -70,12 +69,10 @@ export default function ModalRegister({ handleLogin }) {
       localStorage.setItem('user-info', JSON.stringify(response?.data));
       // console.log(JSON.stringify(response?.data));
       handleLogin();
-      setSuccess(true);
       setFirstName('');
       setLastName('');
       setEmail('');
       setPwd('');
-      setSuccess(true);
       setMatchPwd('');
     } catch (err) {
       if (!err?.response) {
@@ -148,7 +145,7 @@ export default function ModalRegister({ handleLogin }) {
                   <form onSubmit={handleSubmit}>
                     <div className="py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center">
                       <input
-                        className="outline-none"
+                        className="outline-none w-full"
                         type="text"
                         onChange={(e) => setFirstName(e.target.value)}
                         value={firstName}
@@ -163,7 +160,7 @@ export default function ModalRegister({ handleLogin }) {
                     </div>
                     <div className="py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center">
                       <input
-                        className="outline-none"
+                        className="outline-none w-full"
                         type="text"
                         onChange={(e) => setLastName(e.target.value)}
                         value={lastName}
@@ -176,9 +173,15 @@ export default function ModalRegister({ handleLogin }) {
                         <AiOutlineUser />
                       </label>
                     </div>
-                    <div className="py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center">
+                    <div
+                      className={
+                        emailFocus && email && !validEmail
+                          ? `py-2 px-4 border border-red-500 border-solid rounded-full my-3 flex justify-between items-center `
+                          : `py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center `
+                      }
+                    >
                       <input
-                        className="outline-none"
+                        className="outline-none w-full"
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
@@ -199,16 +202,22 @@ export default function ModalRegister({ handleLogin }) {
                       id="emailidnote"
                       className={
                         emailFocus && email && !validEmail
-                          ? 'instructions'
+                          ? 'text-sm sm:text-base relative rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none -mt-2 text-red-500 pl-3 flex items-center'
                           : 'offscreen'
                       }
                     >
                       <FaInfoCircle />
                       The email is not a valid email address
                     </p>
-                    <div className="py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center">
+                    <div
+                      className={
+                        pwdFocus && pwd && !validPwd
+                          ? `py-2 px-4 border border-red-500 border-solid rounded-full my-3 flex justify-between items-center `
+                          : `py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center `
+                      }
+                    >
                       <input
-                        className="outline-none"
+                        className="outline-none w-full"
                         type="password"
                         placeholder="Password"
                         autoComplete="off"
@@ -228,28 +237,37 @@ export default function ModalRegister({ handleLogin }) {
                         />
                       </label>
                     </div>
-                    <p
+                    <div
                       id="pwdnote"
                       className={
-                        pwdFocus && !validPwd ? 'instructions' : 'offscreen'
+                        pwdFocus && pwd && !validPwd
+                          ? 'text-sm sm:text-base relative rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none text-red-500 pl-3 flex flex-col -mt-2'
+                          : 'offscreen'
                       }
                     >
-                      <FaInfoCircle />
-                      8 to 24 characters.
-                      <br />
-                      Must include uppercase and lowercase letters, a number and
-                      a special character.
-                      <br />
-                      Allowed special characters:{' '}
-                      <span aria-label="exclamation mark">!</span>{' '}
-                      <span aria-label="at symbol">@</span>{' '}
-                      <span aria-label="hashtag">#</span>{' '}
-                      <span aria-label="dollar sign">$</span>{' '}
-                      <span aria-label="percent">%</span>
-                    </p>
-                    <div className="py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center">
+                      <span>
+                        <FaInfoCircle />
+                      </span>
+                      8 to 24 characters. Must include uppercase and lowercase
+                      letters, a number and a special character. Allowed special
+                      characters:{' '}
+                      <div className="flex">
+                        <span aria-label="exclamation mark">!</span>{' '}
+                        <span aria-label="at symbol">@</span>{' '}
+                        <span aria-label="hashtag">#</span>{' '}
+                        <span aria-label="dollar sign">$</span>{' '}
+                        <span aria-label="percent">%</span>
+                      </div>
+                    </div>
+                    <div
+                      className={
+                        matchPwd && matchFocus && !validMatch
+                          ? `py-2 px-4 border border-red-500 border-solid rounded-full my-3 flex justify-between items-center `
+                          : `py-2 px-4 border border-slate-300 border-solid rounded-full my-3 flex justify-between items-center `
+                      }
+                    >
                       <input
-                        className="outline-none"
+                        className="outline-none w-full"
                         type="password"
                         placeholder="Password Confirmation"
                         autoComplete="off"
@@ -263,17 +281,23 @@ export default function ModalRegister({ handleLogin }) {
                         required
                       />
                       <label htmlFor="password-confirm">
-                        <FaCheck className={validPwd ? 'valid' : 'hide'} />
-                        <FaTimes
-                          className={validPwd || !pwd ? 'hide' : 'invalid'}
+                        <FaCheck
+                          className={validMatch && matchPwd ? 'valid' : 'hide'}
                         />
-                        {/* <AiOutlineEyeInvisible className='' /> */}
+                        <FaTimes
+                          className={
+                            validMatch || !matchPwd ? 'hide' : 'invalid'
+                          }
+                        />
+                        {/* <AiOutlineEyeInvisible className="" /> */}
                       </label>
                     </div>
                     <p
                       id="confirmnote"
                       className={
-                        matchFocus && !validMatch ? 'instructions' : 'offscreen'
+                        matchFocus && !validMatch
+                          ? 'text-sm sm:text-base relative rounded placeholder-gray-400 focus:border-indigo-400 focus:outline-none -mt-3 mb-3 text-red-500 pl-3 flex items-center'
+                          : 'offscreen'
                       }
                     >
                       <FaInfoCircle />
