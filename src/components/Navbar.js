@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
 import logo from '../images/Logo.svg';
 import { useMediaQuery } from 'react-responsive';
@@ -26,6 +26,15 @@ export default function Navbar() {
       : page.pathname.indexOf('/movie') >= 0
       ? 'movie'
       : 'multi';
+
+  useEffect(() => {
+    if (localStorage.getItem('user-info')) {
+      const data = JSON.parse(localStorage.getItem('user-info')).data;
+      setIsLogin(true);
+      setFirstName(data.first_name);
+      setLastName(data.last_name);
+    }
+  }, []);
 
   const handleLogin = () => {
     const data = JSON.parse(localStorage.getItem('user-info')).data;
