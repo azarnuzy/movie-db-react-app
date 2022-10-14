@@ -8,7 +8,7 @@ export default function ModalLogin({ handleLogin }) {
   let [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
-  const [errMsg, setErrMsg] = useState('');
+  const [, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
