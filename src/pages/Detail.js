@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import apiConfig from '../api/apiConfig';
 import tmdbApi from '../api/tmdbApi';
 import { TrailerButton } from '../components/Button';
+import MovieLists from '../components/MovieLists';
 
 export default function Detail() {
   let { category, id } = useParams();
@@ -24,7 +25,7 @@ export default function Detail() {
 
   return (
     <div>
-      <div className="h-[84vh]"></div>
+      <div className="h-[95vh]"></div>
       <div className="absolute top-0 left-0 w-full">
         {item && (
           <div className="w-full h-[100vh] relative">
@@ -51,13 +52,15 @@ export default function Detail() {
               </div>
               <p className=" text-md mb-3">{item.overview}</p>
               <span className="flex gap-3 items-center text-yellow-400 mt-1 mb-3 ">
-                <AiFillStar /> <p>{item.vote_average} / 10</p>
+                <AiFillStar /> <p>{item.vote_average?.toFixed(1)} / 10</p>
               </span>
               <TrailerButton item={item} />
             </div>
           </div>
         )}
       </div>
+      <h2 className="font-bold mb-3">Similar Movie</h2>
+      {item && <MovieLists category={category} type="similar" id={item.id} />}
     </div>
   );
 }

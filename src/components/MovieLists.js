@@ -14,24 +14,27 @@ import MovieCard from './MovieCard';
 export default function MovieLists({ category, type, id }) {
   const [items, setItems] = useState([]);
   const width = useWindowWidth();
-
+  console.log(id, type === 'similar');
   useEffect(() => {
     const getList = async () => {
-      let response = null;
-      const params = { api_key: apiConfig.apiKey };
-      if (type !== 'similiar') {
-        switch (category) {
-          case cate.movie:
-            response = await tmdbApi.getMoviesList(type, { params });
-            break;
-          default:
-            response = await tmdbApi.getTvList(type, { params });
-        }
-      } else {
-        response = await tmdbApi.similar(category, id);
-      }
+      try {
+        let response = null;
 
-      setItems(response.results);
+        const params = { api_key: apiConfig.apiKey };
+        if (type !== 'similar') {
+          switch (category) {
+            case cate.movie:
+              response = await tmdbApi.getMoviesList(type, { params });
+              break;
+            default:
+              response = await tmdbApi.getTvList(type, { params });
+          }
+        } else {
+          response = await tmdbApi.similar(category, id, { params });
+        }
+        console.log(category, id);
+        setItems(response.results);
+      } catch (error) {}
     };
 
     getList();

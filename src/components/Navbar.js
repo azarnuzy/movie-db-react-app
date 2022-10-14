@@ -84,7 +84,7 @@ export default function Navbar() {
         <div className="sm:flex w-full sm:w-auto sm:flex-grow mx-5 lg:mx-20 justify-between px-4 py-[6.5px] rounded-full group focus-within:border-lightRed border-slate-300 border-solid border items-center hidden">
           <input
             type="text"
-            className="outline-none bg-transparent text-white"
+            className="outline-none bg-transparent text-white w-full"
             id="search-movie"
             placeholder="what do you want to watch?"
             value={keyword}

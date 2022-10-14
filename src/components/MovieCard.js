@@ -20,6 +20,8 @@ export default function MovieCard({ item, category, mediaType }) {
     bg = noImage;
   }
 
+  console.log(item);
+
   return (
     <Link to={link}>
       <div className="relative group">
@@ -33,7 +35,7 @@ export default function MovieCard({ item, category, mediaType }) {
             {item.name || item.title}
           </h3>
           <span className="flex gap-3 items-center text-yellow-400 mt-1 ">
-            <AiFillStar /> <p>{item.vote_average} / 10</p>
+            <AiFillStar /> <p>{item.vote_average?.toFixed(1)} / 10</p>
           </span>
         </div>
       </div>
