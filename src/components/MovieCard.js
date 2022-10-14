@@ -20,8 +20,6 @@ export default function MovieCard({ item, category, mediaType }) {
     bg = noImage;
   }
 
-  console.log(item);
-
   return (
     <Link to={link}>
       <div className="relative group">

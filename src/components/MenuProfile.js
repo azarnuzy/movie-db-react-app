@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 export default function MenuProfile({ firstName, lastName, handleLogout }) {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
   return (
-    <div className="flex items-center">
+    <div className="flex items-center z-[100]">
       <Menu>
         <Menu.Button className="flex gap-2 items-center">
           <img

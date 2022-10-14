@@ -10,6 +10,7 @@ export default function ModalLogin({ handleLogin }) {
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
   const [success, setSuccess] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -27,20 +28,21 @@ export default function ModalLogin({ handleLogin }) {
     e.preventDefault();
 
     try {
+      setSuccess(true);
       const response = await axios.post(
-        'http://notflixtv.herokuapp.com/api/v1/users/login',
+        'https://notflixtv.herokuapp.com/api/v1/users/login',
         { email: user, password: password }
       );
 
       localStorage.setItem('user-info', JSON.stringify(response?.data));
 
-      console.log(JSON.stringify(response?.data));
-      console.log(user);
-      console.log(password);
+      setIsLogin(true);
+      // console.log(JSON.stringify(response?.data));
+      // console.log(user);
+      // console.log(password);
       handleLogin();
       setUser('');
       setPassword('');
-      setSuccess(true);
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response');
@@ -87,6 +89,13 @@ export default function ModalLogin({ handleLogin }) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  {!isLogin && success && (
+                    <div class="flex items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  justify-center space-x-2">
+                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                    </div>
+                  )}
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"

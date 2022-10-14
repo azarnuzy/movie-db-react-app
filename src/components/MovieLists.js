@@ -14,7 +14,7 @@ import MovieCard from './MovieCard';
 export default function MovieLists({ category, type, id }) {
   const [items, setItems] = useState([]);
   const width = useWindowWidth();
-  console.log(id, type === 'similar');
+
   useEffect(() => {
     const getList = async () => {
       try {

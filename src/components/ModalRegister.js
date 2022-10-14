@@ -31,6 +31,9 @@ export default function ModalRegister({ handleLogin }) {
 
   const [errMsg, setErrMsg] = useState('');
 
+  const [success, setSuccess] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+
   useEffect(() => {
     setValidEmail(EMAIL_REGEX.test(email));
   }, [email]);
@@ -55,8 +58,9 @@ export default function ModalRegister({ handleLogin }) {
     }
 
     try {
+      setSuccess(true);
       const response = await axios.post(
-        'http://notflixtv.herokuapp.com/api/v1/users',
+        'https://notflixtv.herokuapp.com/api/v1/users',
         {
           first_name: firstName,
           last_name: lastName,
@@ -65,6 +69,7 @@ export default function ModalRegister({ handleLogin }) {
           password_confirmation: pwd,
         }
       );
+      setIsLogin(true);
       closeModal();
       localStorage.setItem('user-info', JSON.stringify(response?.data));
       // console.log(JSON.stringify(response?.data));
@@ -128,6 +133,13 @@ export default function ModalRegister({ handleLogin }) {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  {!isLogin && success && (
+                    <div class="flex items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  justify-center space-x-2">
+                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                    </div>
+                  )}
                   <p
                     ref={errRef}
                     className={errMsg ? 'errmsg' : 'offscreen'}
