@@ -11,6 +11,7 @@ export default function RoutesComponent() {
       <Route path="/:category" element={<Catalog />} />
       <Route path="/:category/:id" element={<Detail />} />
       <Route path="/:category/search/:keyword" element={<Catalog />} />
+      <Route path="/genres/:id" element={<Catalog />} />
     </Routes>
   );
 }
