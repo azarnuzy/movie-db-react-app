@@ -15,7 +15,7 @@ export default function Home() {
       <TitleSection section={'category'} destination={'genres'}>
         Movie Category
       </TitleSection>
-      <GenreList type={'movie'} />
+      <GenreList category={category.movie} type={'movie'} />
       <TitleSection section={'homePopularTV'} destination={'allTv'}>
         Popular TV Shows
       </TitleSection>
@@ -23,7 +23,7 @@ export default function Home() {
       <TitleSection section={'category'} destination={'genres'}>
         TV Category
       </TitleSection>
-      <GenreList type={'tv'} />
+      <GenreList category={category.tv} type={'tv'} />
     </div>
   );
 }

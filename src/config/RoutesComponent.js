@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Catalog from '../pages/Catalog';
 import Detail from '../pages/Detail';
 import Home from '../pages/Home';
+import Category from '../pages/Category';
 
 export default function RoutesComponent() {
   return (
@@ -11,7 +12,7 @@ export default function RoutesComponent() {
       <Route path="/:category" element={<Catalog />} />
       <Route path="/:category/:id" element={<Detail />} />
       <Route path="/:category/search/:keyword" element={<Catalog />} />
-      <Route path="/genres/:id" element={<Catalog />} />
+      <Route path="/:category/genres/:id" element={<Category />} />
     </Routes>
   );
 }

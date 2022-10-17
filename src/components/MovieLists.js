@@ -71,7 +71,7 @@ export default function MovieLists({ category, type, id }) {
   );
 }
 
-export function GenreList({ type }) {
+export function GenreList({ category, type }) {
   const [items, setItems] = useState([]);
   const width = useWindowWidth();
 
@@ -109,7 +109,7 @@ export function GenreList({ type }) {
         {items.map((item, i) => (
           <SwiperSlide key={i}>
             <Link
-              to={`/genres/${item.id}`}
+              to={`/${category}/genres/${item.id}`}
               className="flex justify-center py-3 px-1 border-lightRed border-solid rounded-full border text-lightRed whitespace-nowrap"
             >
               {item.name}
