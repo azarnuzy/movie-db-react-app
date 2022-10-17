@@ -110,7 +110,7 @@ export function GenreList({ category, type }) {
           <SwiperSlide key={i}>
             <Link
               to={`/${category}/genres/${item.id}`}
-              className="flex justify-center py-3 px-1 border-lightRed border-solid rounded-full border text-lightRed whitespace-nowrap"
+              className="flex justify-center py-3 px-1 border-lightRed border-solid rounded-full border text-lightRed whitespace-nowrap overflow-hidden"
             >
               {item.name}
             </Link>

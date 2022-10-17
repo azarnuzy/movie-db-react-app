@@ -59,7 +59,7 @@ export default function Detail() {
           </div>
         )}
       </div>
-      <h2 className="font-bold mb-3">Similar Movie</h2>
+      <h2 className="font-bold mb-3 sm:text-2xl">Similar Movie</h2>
       {item && <MovieLists category={category} type="similar" id={item.id} />}
     </div>
   );
