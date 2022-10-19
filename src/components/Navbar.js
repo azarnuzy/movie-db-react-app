@@ -31,16 +31,19 @@ export default function Navbar() {
     if (localStorage.getItem('user-info')) {
       const data = JSON.parse(localStorage.getItem('user-info')).data;
       setIsLogin(true);
-      setFirstName(data.first_name);
-      setLastName(data.last_name);
+      setFirstName(data?.first_name || data?.givenName);
+      setLastName(data?.last_name || data?.familyName);
     }
   }, []);
 
   const handleLogin = () => {
-    const data = JSON.parse(localStorage.getItem('user-info')).data;
-    setIsLogin(true);
-    setFirstName(data.first_name);
-    setLastName(data.last_name);
+    if (localStorage.getItem('user-info')) {
+      const data = JSON.parse(localStorage.getItem('user-info'))?.data;
+      console.log(data);
+      setIsLogin(true);
+      setFirstName(data?.first_name || data?.givenName);
+      setLastName(data?.last_name || data?.familyName);
+    }
   };
 
   const handleLogout = () => {
@@ -48,6 +51,7 @@ export default function Navbar() {
     setFirstName('');
     setLastName('');
     localStorage.removeItem('user-info');
+    localStorage.removeItem('token');
   };
 
   const handleKeyPressed = (e) => {

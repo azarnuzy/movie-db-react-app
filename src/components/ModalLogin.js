@@ -9,6 +9,8 @@ import {
 import Button from './Button';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
+import tmdbApi from '../api/tmdbApi';
+import apiConfig from '../api/apiConfig';
 
 export default function ModalLogin({ handleLogin }) {
   let [isOpen, setIsOpen] = useState(false);
@@ -26,8 +28,7 @@ export default function ModalLogin({ handleLogin }) {
     setIsOpen(true);
   }
 
-  const clientId =
-    '907788144298-3e4o1rkr1jpq5k9lduqs417ij2r061jk.apps.googleusercontent.com';
+  const clientId = apiConfig.clientId;
 
   useEffect(() => {
     const initClient = () => {
@@ -41,8 +42,17 @@ export default function ModalLogin({ handleLogin }) {
 
   const onSuccess = (res) => {
     // closeModal();
-    console.log('success:', res);
+    // console.log('success:', res.profileObj);
+    localStorage.setItem(
+      'user-info',
+      JSON.stringify({
+        data: res?.profileObj,
+      })
+    );
+    localStorage.setItem('token', JSON.stringify(res?.accessToken));
+    handleLogin();
   };
+
   const onFailure = (err) => {
     console.log('failed:', err);
   };
