@@ -1,10 +1,15 @@
 import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 import { Fragment, useState, useEffect } from 'react';
-import { AiOutlineEyeInvisible, AiOutlineMail } from 'react-icons/ai';
+import {
+  AiFillGoogleCircle,
+  AiOutlineEyeInvisible,
+  AiOutlineMail,
+} from 'react-icons/ai';
+import { useGoogleLogin } from '@react-oauth/google';
 import Button from './Button';
 
-export default function ModalLogin({ handleLogin }) {
+export default function ModalLogin({ handleLogin, loginGoogle }) {
   let [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
@@ -134,13 +139,22 @@ export default function ModalLogin({ handleLogin }) {
                         <AiOutlineEyeInvisible />
                       </label>
                     </div>
-                    <Button
-                      type={'primary'}
-                      typeButton={'submit'}
-                      closeModal={closeModal}
-                    >
-                      Login
-                    </Button>
+                    <div className="flex justify-between items-center">
+                      <Button
+                        type={'primary'}
+                        typeButton={'submit'}
+                        closeModal={closeModal}
+                      >
+                        Login
+                      </Button>
+                      <button
+                        className="px-3 py-2 rounded-full border-solid border-lightRed transition duration-300 bg-lightRed font-medium text-white  hover:opacity-80 border flex items-center"
+                        onClick={() => loginGoogle()}
+                      >
+                        <AiFillGoogleCircle className=" mr-2 text-xl" /> Sign in
+                        with Google
+                      </button>
+                    </div>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
