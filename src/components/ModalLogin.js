@@ -1,8 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 import { Fragment, useState, useEffect } from 'react';
-import { AiOutlineEyeInvisible, AiOutlineMail } from 'react-icons/ai';
+import {
+  AiFillGoogleCircle,
+  AiOutlineEyeInvisible,
+  AiOutlineMail,
+} from 'react-icons/ai';
 import Button from './Button';
+import { GoogleLogin } from 'react-google-login';
+import { gapi } from 'gapi-script';
 
 export default function ModalLogin({ handleLogin }) {
   let [isOpen, setIsOpen] = useState(false);
@@ -19,6 +25,27 @@ export default function ModalLogin({ handleLogin }) {
   function openModal() {
     setIsOpen(true);
   }
+
+  const clientId =
+    '907788144298-3e4o1rkr1jpq5k9lduqs417ij2r061jk.apps.googleusercontent.com';
+
+  useEffect(() => {
+    const initClient = () => {
+      gapi.client.init({
+        clientId: clientId,
+        scope: '',
+      });
+    };
+    gapi.load('client:auth2', initClient);
+  });
+
+  const onSuccess = (res) => {
+    // closeModal();
+    console.log('success:', res);
+  };
+  const onFailure = (err) => {
+    console.log('failed:', err);
+  };
 
   useEffect(() => {
     setErrMsg('');
@@ -90,10 +117,10 @@ export default function ModalLogin({ handleLogin }) {
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   {!isLogin && success && (
-                    <div class="flex items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  justify-center space-x-2">
-                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
-                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
-                      <div class="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                    <div className="flex items-center  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  justify-center space-x-2">
+                      <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                      <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
+                      <div className="w-4 h-4 rounded-full animate-pulse dark:bg-violet-400"></div>
                     </div>
                   )}
                   <Dialog.Title
@@ -134,13 +161,32 @@ export default function ModalLogin({ handleLogin }) {
                         <AiOutlineEyeInvisible />
                       </label>
                     </div>
-                    <Button
-                      type={'primary'}
-                      typeButton={'submit'}
-                      closeModal={closeModal}
-                    >
-                      Login
-                    </Button>
+                    <div className="flex justify-between items-center">
+                      <Button
+                        type={'primary'}
+                        typeButton={'submit'}
+                        closeModal={closeModal}
+                      >
+                        Login
+                      </Button>
+                      <GoogleLogin
+                        clientId={clientId}
+                        render={(renderProps) => (
+                          <button
+                            className="px-3 py-2 rounded-full border-solid border-lightRed   transition duration-300 bg-lightRed font-medium text-white  hover:opacity-80 border flex items-center"
+                            onClick={renderProps.onClick}
+                            disabled={renderProps.disabled}
+                          >
+                            <AiFillGoogleCircle className="mr-2 text-xl" /> Sign
+                            in with Google
+                          </button>
+                        )}
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        cookiePolicy={'single_host_origin'}
+                        isSignedIn={true}
+                      />
+                    </div>
                   </form>
                 </Dialog.Panel>
               </Transition.Child>
