@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { AiOutlineSearch, AiOutlineUser } from 'react-icons/ai';
+import {
+  AiFillGoogleCircle,
+  AiOutlineSearch,
+  AiOutlineUser,
+} from 'react-icons/ai';
 import logo from '../images/Logo.svg';
 import { useMediaQuery } from 'react-responsive';
 import ModalElement from './ModalElement';
@@ -9,6 +13,7 @@ import ModalRegister from './ModalRegister';
 import ModalLogin from './ModalLogin';
 import MenuProfile from './MenuProfile';
 import { Menu } from '@headlessui/react';
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function Navbar() {
   const isSmallWidth = useMediaQuery({ query: '(min-width: 640px)' });
@@ -31,19 +36,16 @@ export default function Navbar() {
     if (localStorage.getItem('user-info')) {
       const data = JSON.parse(localStorage.getItem('user-info')).data;
       setIsLogin(true);
-      setFirstName(data?.first_name || data?.givenName);
-      setLastName(data?.last_name || data?.familyName);
+      setFirstName(data.first_name || 'Google');
+      setLastName(data.last_name || 'User');
     }
   }, []);
 
   const handleLogin = () => {
-    if (localStorage.getItem('user-info')) {
-      const data = JSON.parse(localStorage.getItem('user-info'))?.data;
-      console.log(data);
-      setIsLogin(true);
-      setFirstName(data?.first_name || data?.givenName);
-      setLastName(data?.last_name || data?.familyName);
-    }
+    const data = JSON.parse(localStorage.getItem('user-info')).data;
+    setIsLogin(true);
+    setFirstName(data.first_name || 'Google');
+    setLastName(data.last_name || 'User');
   };
 
   const handleLogout = () => {
@@ -63,6 +65,18 @@ export default function Navbar() {
     }
   };
 
+  const loginGoogle = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      localStorage.setItem(
+        'user-info',
+        JSON.stringify({ data: tokenResponse })
+      );
+      localStorage.setItem('token', JSON.stringify(tokenResponse.access_token));
+      console.log(tokenResponse);
+      handleLogin();
+    },
+  });
+
   return (
     <div className="flex justify-between mt-3 relative z-10">
       <Link to="/" className="flex items-center">
@@ -71,7 +85,7 @@ export default function Navbar() {
       {isPhone && !isLogin && (
         <div className="flex gap-3 text-[30px]  text-slate-200 items-center ">
           <ModalElement />
-          <DropDownMenu handleLogin={handleLogin} />
+          <DropDownMenu handleLogin={handleLogin} loginGoogle={loginGoogle} />
         </div>
       )}
       {isPhone && isLogin && (
@@ -102,7 +116,7 @@ export default function Navbar() {
       )}
       {isSmallWidth && !isLogin && (
         <div className="sm:flex justify-between gap-2 hidden">
-          <ModalLogin handleLogin={handleLogin} />
+          <ModalLogin handleLogin={handleLogin} loginGoogle={loginGoogle} />
           <ModalRegister handleLogin={handleLogin} />
         </div>
       )}
@@ -117,7 +131,7 @@ export default function Navbar() {
   );
 }
 
-function DropDownMenu({ handleLogin }) {
+function DropDownMenu({ handleLogin, loginGoogle }) {
   const [customOpen, setCustomOpen] = useState(false);
   function buttonClicked() {
     setCustomOpen((prev) => !prev);
@@ -137,13 +151,22 @@ function DropDownMenu({ handleLogin }) {
             {customOpen && (
               <Menu.Items
                 static
-                className="fixed top-8 bg-transparent sm:px-5 sm:right-2 right-0 mt-2 w-fit p-2  origin-top-right  rounded-sm md:text-lg  ring-1 ring-black ring-opacity-5 focus:outline-none text-black text-sm flex flex-col gap-3"
+                className="fixed top-8 bg-transparent sm:px-5 sm:right-2 right-0 mt-2 w-fit p-2  origin-top-right  rounded-sm md:text-lg  ring-1 ring-black ring-opacity-5 focus:outline-none text-black text-sm flex flex-col gap-3 items-end"
               >
                 <Menu.Item className="text-left">
                   <ModalLogin handleLogin={handleLogin} />
                 </Menu.Item>
                 <Menu.Item className="text-left">
                   <ModalRegister handleLogin={handleLogin} />
+                </Menu.Item>
+                <Menu.Item className="text-left flex items-center px-3 py-2 rounded-full border-solid border-lightRed transition duration-300 bg-lightRed font-medium text-white  hover:opacity-80 border">
+                  <button
+                    className="px-3 py-2 rounded-full border-solid border-lightRed transition duration-300 bg-lightRed font-medium text-white  hover:opacity-80 border flex items-center"
+                    onClick={() => loginGoogle()}
+                  >
+                    <AiFillGoogleCircle className=" mr-2 text-xl" /> Sign in
+                    with Google
+                  </button>
                 </Menu.Item>
               </Menu.Items>
             )}

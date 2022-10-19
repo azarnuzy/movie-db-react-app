@@ -6,12 +6,10 @@ import {
   AiOutlineEyeInvisible,
   AiOutlineMail,
 } from 'react-icons/ai';
-import Button from './Button';
-import { GoogleLogin } from 'react-google-login';
-import { gapi } from 'gapi-script';
-import apiConfig from '../api/apiConfig';
 
-export default function ModalLogin({ handleLogin }) {
+import Button from './Button';
+
+export default function ModalLogin({ handleLogin, loginGoogle }) {
   let [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
@@ -26,35 +24,6 @@ export default function ModalLogin({ handleLogin }) {
   function openModal() {
     setIsOpen(true);
   }
-
-  const clientId = apiConfig.clientId;
-
-  useEffect(() => {
-    const initClient = () => {
-      gapi.client.init({
-        clientId: clientId,
-        scope: '',
-      });
-    };
-    gapi.load('client:auth2', initClient);
-  });
-
-  const onSuccess = (res) => {
-    // closeModal();
-    // console.log('success:', res.profileObj);
-    localStorage.setItem(
-      'user-info',
-      JSON.stringify({
-        data: res?.profileObj,
-      })
-    );
-    localStorage.setItem('token', JSON.stringify(res?.accessToken));
-    handleLogin();
-  };
-
-  const onFailure = (err) => {
-    console.log('failed:', err);
-  };
 
   useEffect(() => {
     setErrMsg('');
@@ -178,23 +147,13 @@ export default function ModalLogin({ handleLogin }) {
                       >
                         Login
                       </Button>
-                      <GoogleLogin
-                        clientId={clientId}
-                        render={(renderProps) => (
-                          <button
-                            className="px-3 py-2 rounded-full border-solid border-lightRed   transition duration-300 bg-lightRed font-medium text-white  hover:opacity-80 border flex items-center"
-                            onClick={renderProps.onClick}
-                            disabled={renderProps.disabled}
-                          >
-                            <AiFillGoogleCircle className="mr-2 text-xl" /> Sign
-                            in with Google
-                          </button>
-                        )}
-                        onSuccess={onSuccess}
-                        onFailure={onFailure}
-                        cookiePolicy={'single_host_origin'}
-                        isSignedIn={true}
-                      />
+                      <button
+                        className="px-3 py-2 rounded-full border-solid border-lightRed transition duration-300 bg-lightRed font-medium text-white  hover:opacity-80 border flex items-center"
+                        onClick={() => loginGoogle()}
+                      >
+                        <AiFillGoogleCircle className=" mr-2 text-xl" /> Sign in
+                        with Google
+                      </button>
                     </div>
                   </form>
                 </Dialog.Panel>
