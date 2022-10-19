@@ -9,7 +9,6 @@ import {
 import Button from './Button';
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
-import tmdbApi from '../api/tmdbApi';
 import apiConfig from '../api/apiConfig';
 
 export default function ModalLogin({ handleLogin }) {
